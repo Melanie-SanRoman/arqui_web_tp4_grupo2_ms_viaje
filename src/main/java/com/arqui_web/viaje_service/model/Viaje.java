@@ -29,8 +29,7 @@ public class Viaje {
 	private Double kilometros;
 	@Column
 	private Double costo;
-	@OneToMany(mappedBy = "viaje")
-	private List<Pausa> pausas;
+	private List<Long> pausasId;
 
 	public Viaje() {
 		super();
@@ -41,7 +40,7 @@ public class Viaje {
 		this.inicio = inicio;
 		this.fin = fin;
 		this.monopatinId = monopatinId;
-		this.pausas = new ArrayList<>();
+		this.pausasId = new ArrayList<>();
 	}
 
 	public Viaje(LocalDate inicio, LocalDate fin, Long monopatinId, Double kilometros, Double costo) {
@@ -51,7 +50,7 @@ public class Viaje {
 		this.monopatinId = monopatinId;
 		this.kilometros = kilometros;
 		this.costo = costo;
-		this.pausas = new ArrayList<>();
+		this.pausasId = new ArrayList<>();
 	}
 
 	public ViajeResponseDTO toViajeDTO() {
@@ -99,12 +98,12 @@ public class Viaje {
 		this.costo = costo;
 	}
 
-	public List<Pausa> getPausas() {
-		return pausas;
+	public List<Long> getPausas() {
+		return pausasId;
 	}
 
-	public void setPausas(List<Pausa> pausas) {
-		this.pausas = pausas;
+	public void setPausas(List<Long> pausas) {
+		this.pausasId = pausas;
 	}
 
 	public Long getId() {
