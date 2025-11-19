@@ -43,19 +43,28 @@ public class Viaje {
 		this.pausasId = new ArrayList<>();
 	}
 
-	public Viaje(LocalDate inicio, LocalDate fin, Long monopatinId, Double kilometros, Double costo) {
+	public Viaje(LocalDate inicio, LocalDate fin, Long monopatinId, Double kilometros, Double costo,
+			List<Long> pausasId) {
 		super();
 		this.inicio = inicio;
 		this.fin = fin;
 		this.monopatinId = monopatinId;
 		this.kilometros = kilometros;
 		this.costo = costo;
-		this.pausasId = new ArrayList<>();
+		this.pausasId = pausasId;
 	}
 
 	public ViajeResponseDTO toViajeDTO() {
-		return new ViajeResponseDTO(this.getId(), this.inicio, this.fin, new MonopatinDTO(this.monopatinId),
+		return new ViajeResponseDTO(this.getId(), this.getInicio(), this.getFin(), new MonopatinDTO(this.monopatinId),
 				this.getKilometros(), this.getCosto());
+	}
+
+	public List<Long> getPausasId() {
+		return pausasId;
+	}
+
+	public void setPausasId(List<Long> pausasId) {
+		this.pausasId = pausasId;
 	}
 
 	public LocalDate getInicio() {

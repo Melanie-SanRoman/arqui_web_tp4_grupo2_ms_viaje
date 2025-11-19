@@ -17,6 +17,8 @@ import org.springframework.web.bind.annotation.RestController;
 import com.arqui_web.viaje_service.dto.ViajeResponseDTO;
 import com.arqui_web.viaje_service.service.ViajeService;
 
+import jakarta.persistence.EntityNotFoundException;
+
 @RestController
 @RequestMapping("/viajes")
 public class ViajeController {
@@ -24,25 +26,25 @@ public class ViajeController {
 	private ViajeService service;
 
 	@PostMapping
-	public ResponseEntity<ViajeResponseDTO> createCarrera(@RequestBody ViajeResponseDTO dto) {
-		ViajeResponseDTO creado = service.createViaje(dto);
+	public ResponseEntity<ViajeResponseDTO> postViaje(@RequestBody ViajeResponseDTO dto) {
+		ViajeResponseDTO creado = service.postViaje(dto);
 		return ResponseEntity.status(HttpStatus.CREATED).body(creado);
 	}
 
 	@GetMapping("/{id}")
-	public ResponseEntity<ViajeResponseDTO> obtenerViajeById(@PathVariable Long id) {
-		Optional<ViajeResponseDTO> encontrado = service.obtenerViaje(id);
+	public ResponseEntity<ViajeResponseDTO> getViajeById(@PathVariable Long id) {
+		Optional<ViajeResponseDTO> encontrado = service.getViajeById(id);
 		return encontrado.map(ResponseEntity::ok).orElse(ResponseEntity.notFound().build());
 	}
 
 	@GetMapping
-	public ResponseEntity<Iterable<ViajeResponseDTO>> obtenerViajes() {
-		Iterable<ViajeResponseDTO> it = service.obtenerViajes();
+	public ResponseEntity<Iterable<ViajeResponseDTO>> getViajes() {
+		Iterable<ViajeResponseDTO> it = service.getViajes();
 		return ResponseEntity.ok(it);
 	}
 
 	@PutMapping("/{id}")
-	public ResponseEntity<ViajeResponseDTO> updateCarrera(@RequestBody ViajeResponseDTO dto, @PathVariable Long id) {
+	public ResponseEntity<ViajeResponseDTO> updateViaje(@RequestBody ViajeResponseDTO dto, @PathVariable Long id) {
 		return service.updateViaje(dto, id).map(ResponseEntity::ok).orElse(ResponseEntity.notFound().build());
 	}
 
@@ -55,4 +57,15 @@ public class ViajeController {
 			return ResponseEntity.notFound().build();
 		}
 	}
+
+	@GetMapping("/viajes/{id}/finalizar")
+	public ResponseEntity<ViajeResponseDTO> finalizarViaje(@PathVariable Long id) {
+	    try {
+	        ViajeResponseDTO dto = service.finalizarViaje(id);
+	        return ResponseEntity.ok(dto);
+	    } catch (EntityNotFoundException e) {
+	        return ResponseEntity.notFound().build();
+	    }
+	}
+
 }

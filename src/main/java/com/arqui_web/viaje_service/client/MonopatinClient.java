@@ -17,5 +17,7 @@ public class MonopatinClient {
     public MonopatinDTO obtenerMonopatinById(Long id) {
         return restTemplate.getForObject(BASE_URL + "/" + id, MonopatinDTO.class);
     }
+    
+    public void cambiarUbicacion() {}
 }
 

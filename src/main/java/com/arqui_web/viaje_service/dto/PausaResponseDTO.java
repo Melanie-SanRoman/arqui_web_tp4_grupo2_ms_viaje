@@ -3,6 +3,7 @@ package com.arqui_web.viaje_service.dto;
 import java.time.LocalDate;
 
 public class PausaResponseDTO {
+	private Long id;
 	private LocalDate inicio;
 	private LocalDate fin;
 
@@ -10,10 +11,19 @@ public class PausaResponseDTO {
 		super();
 	}
 
-	public PausaResponseDTO(LocalDate inicio, LocalDate fin) {
+	public PausaResponseDTO(Long id, LocalDate inicio, LocalDate fin) {
 		super();
+		this.id = id;
 		this.inicio = inicio;
 		this.fin = fin;
+	}
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
 	}
 
 	public LocalDate getInicio() {
