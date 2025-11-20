@@ -16,7 +16,7 @@ Microservicio externo:
 * `monopatin_service` -> Desplaza la ubicacion del monopatin.
 
 Responsabilidades de `viaje_service`:
-* Registrar el inicio de un viaje.
+* Registrar el inicio de un viaje a traves del id de un monopatin.
 * Finalizar un viaje calculando:
 	* Kilometros recorridos.
 	* Minutos de pausa solicitados a `pausa_service`.
@@ -26,14 +26,37 @@ Responsabilidades de `viaje_service`:
 ## Entidad principal 
 
 **Viaje**
-| Campo       | Tipo      | Descripción                    |
-| ----------- | --------  | ---------------------          |
-| id          | Long      | Identificador único            |
-| inicio      | LocalDate | Inicio del viaje               |
-| fin         | LocalDate | Fin del viaje                  |
-| monopatinId | Long      | ID del monopatín asociado      |
-| kilometros  | Double    | Kilómetros recorridos          |
-| costo       | Double    | Costo final calculado          |
+| Campo       | Tipo        | Descripción                       |
+| ----------- | ----------- | --------------------------------- |
+| id          | Long        | Identificador único               |
+| inicio      | LocalDate   | Inicio del viaje                  |
+| fin         | LocalDate   | Fin del viaje                     |
+| monopatinId | Long        | ID del monopatín asociado         |
+| kilometros  | Double      | Kilómetros recorridos             |
+| costo       | Double      | Costo final calculado             |
+| pausas      | List<Long>  | IDs de pausas asociadas al viaje  |
+
+## Endpoints disponibles
+
+* POST `/api/viajes/iniciar/{monopatinId}`
+	* Inicia un viaje para el monopatin indicado.
+ 	* Devuelve: `ViajeResponseDTO.java`
+```
+{
+	"inicio": fecha_actual,
+	"fin": null,
+	"monopatinId": monopatinId,
+	"costo": 0.0,
+	"kilometros": 0.0
+}
+```
+
+* PUT `/api/viajes/{id}/finalizar`
+	* Finaliza un viaje, obteniendo:
+ 		* Distancia recorrida (`MonopatinClient` + `DistanciaService`)
+   		* Minutos de pausa (`PausaClient`)
+     	* Costo final calculado (`TarifaClient`)
+   * Devuelve: `ViajeResponseDTO.java` completo. 
 
 ## Comunicacion con otros microservicios
 
@@ -80,7 +103,10 @@ Consume endpoints de `monopatin_service`:
 ## Logica de negocio
 
 1. Inicio del viaje:
-   Se registra inicio + monopatinId
+   * Se recibe monopatinId.
+   * Se obtiene el monopatín mediante `MonopatinClient`.
+   * Se crea la entidad Viaje y se persiste.
+   * Se retorna el `ViajeResponseDTO.java`.
    
 3. Finalizacion del viaje:
    * Se calcula distancia recorrida.
