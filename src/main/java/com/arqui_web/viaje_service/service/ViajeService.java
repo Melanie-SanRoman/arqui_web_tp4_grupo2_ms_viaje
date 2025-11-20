@@ -119,7 +119,7 @@ public class ViajeService {
 		// Cambiar ubicacion del monopatin
 		// Este MS no tiene manera de saber las coordenadas de la parada donde el
 		// monopatin finalizo el viaje
-		monopatinClient.desplazarUbicacion(viaje.getId(), new HashMap<>());
+		monopatinClient.desplazarUbicacion(monopatin.getId(), new HashMap<>());
 
 		// Obtener punto final
 		MonopatinDTO monopatinActual = monopatinClient.getMonopatinById(viaje.getMonopatinId());
