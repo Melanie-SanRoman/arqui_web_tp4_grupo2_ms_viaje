@@ -1,6 +1,7 @@
 package com.arqui_web.viaje_service.service;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Optional;
@@ -101,6 +102,26 @@ public class ViajeService {
 			log.error("Error eliminando viaje con id {}", id);
 			return false;
 		}
+	}
+
+	public ViajeResponseDTO iniciarViaje(Long monopatinId) {
+
+		// Crear el viaje con datos mínimos
+		Viaje viaje = new Viaje();
+		viaje.setInicio(LocalDate.now());
+		viaje.setMonopatinId(monopatinId);
+		viaje.setKilometros(0.0);
+		viaje.setCosto(0.0);
+		viaje.setPausas(new ArrayList<>());
+
+		Viaje guardado = repository.save(viaje);
+		log.info("Viaje iniciado con ID {}", guardado.getId());
+
+		// Completar el DTO con info del monopatin
+		ViajeResponseDTO dto = guardado.toViajeDTO();
+		dto.setMonopatin(monopatinClient.getMonopatinById(monopatinId));
+
+		return dto;
 	}
 
 	/**

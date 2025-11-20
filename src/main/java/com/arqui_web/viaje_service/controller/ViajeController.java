@@ -58,14 +58,24 @@ public class ViajeController {
 		}
 	}
 
-	@GetMapping("/viajes/{id}/finalizar")
+	@PostMapping("/viajes/iniciar/{monopatinId}")
+	public ResponseEntity<ViajeResponseDTO> iniciarViaje(@PathVariable Long monopatinId) {
+		try {
+			ViajeResponseDTO dto = service.iniciarViaje(monopatinId);
+			return ResponseEntity.ok(dto);
+		} catch (EntityNotFoundException e) {
+			return ResponseEntity.notFound().build();
+		}
+	}
+
+	@PutMapping("/viajes/{id}/finalizar")
 	public ResponseEntity<ViajeResponseDTO> finalizarViaje(@PathVariable Long id) {
-	    try {
-	        ViajeResponseDTO dto = service.finalizarViaje(id);
-	        return ResponseEntity.ok(dto);
-	    } catch (EntityNotFoundException e) {
-	        return ResponseEntity.notFound().build();
-	    }
+		try {
+			ViajeResponseDTO dto = service.finalizarViaje(id);
+			return ResponseEntity.ok(dto);
+		} catch (EntityNotFoundException e) {
+			return ResponseEntity.notFound().build();
+		}
 	}
 
 }
