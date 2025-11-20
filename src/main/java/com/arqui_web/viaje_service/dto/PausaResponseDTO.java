@@ -6,9 +6,26 @@ public class PausaResponseDTO {
 	private Long id;
 	private LocalDate inicio;
 	private LocalDate fin;
+	private Long viajeId;
 
 	public PausaResponseDTO() {
 		super();
+	}
+
+	public Long getViajeId() {
+		return viajeId;
+	}
+
+	public void setViajeId(Long viajeId) {
+		this.viajeId = viajeId;
+	}
+
+	public PausaResponseDTO(Long id, LocalDate inicio, LocalDate fin, Long viajeId) {
+		super();
+		this.id = id;
+		this.inicio = inicio;
+		this.fin = fin;
+		this.viajeId = viajeId;
 	}
 
 	public PausaResponseDTO(Long id, LocalDate inicio, LocalDate fin) {

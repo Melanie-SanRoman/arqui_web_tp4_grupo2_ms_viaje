@@ -98,7 +98,7 @@ public class ViajeService {
 				return true;
 			}
 		} catch (Exception e) {
-			log.error("Error eliminando carrera con id {}", id);
+			log.error("Error eliminando viaje con id {}", id);
 			return false;
 		}
 	}

@@ -14,7 +14,7 @@ public class TarifaClient {
 	@Autowired
 	private RestTemplate restTemplate;
 
-	private static final String BASE_URL = "http://tarifa-service/api/tarifas";
+	private static final String BASE_URL = "http://MICROSERVICIO-TARIFA/api/tarifas";
 
 	public CostoResponseDTO calcularCosto(CostoRequestDTO request) {
 
