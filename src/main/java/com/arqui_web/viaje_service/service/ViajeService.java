@@ -1,6 +1,7 @@
 package com.arqui_web.viaje_service.service;
 
 import java.time.LocalDate;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -46,10 +47,7 @@ public class ViajeService {
 	}
 
 	public ViajeResponseDTO postViaje(ViajeResponseDTO dto) {
-		Viaje v = new Viaje(
-				dto.getInicio(), 
-				dto.getFin(), 
-				dto.getMonopatin().getId());
+		Viaje v = new Viaje(dto.getInicio(), dto.getFin(), dto.getMonopatin().getId());
 
 		Viaje guardado = repository.save(v);
 		log.info("Viaje creada con ID {}", guardado.getId());
@@ -61,7 +59,7 @@ public class ViajeService {
 		return repository.findById(id).map(v -> {
 
 			ViajeResponseDTO dto = v.toViajeDTO();
-			MonopatinDTO monopatin = monopatinClient.obtenerMonopatinById(v.getMonopatinId());
+			MonopatinDTO monopatin = monopatinClient.getMonopatinById(v.getMonopatinId());
 			dto.setMonopatin(monopatin);
 			return dto;
 
@@ -115,14 +113,16 @@ public class ViajeService {
 		Viaje viaje = repository.findById(viajeId).orElseThrow(() -> new EntityNotFoundException("Viaje no existe"));
 
 		// Obtener punto de inicio
-		MonopatinDTO monopatin = monopatinClient.obtenerMonopatinById(viaje.getMonopatinId());
+		MonopatinDTO monopatin = monopatinClient.getMonopatinById(viaje.getMonopatinId());
 		ParadaDTO paradaInicio = monopatin.getParada();
 
 		// Cambiar ubicacion del monopatin
-		monopatinClient.cambiarUbicacion();
+		// Este MS no tiene manera de saber las coordenadas de la parada donde el
+		// monopatin finalizo el viaje
+		monopatinClient.desplazarUbicacion(viaje.getId(), new HashMap<>());
 
 		// Obtener punto final
-		MonopatinDTO monopatinActual = monopatinClient.obtenerMonopatinById(viaje.getMonopatinId());
+		MonopatinDTO monopatinActual = monopatinClient.getMonopatinById(viaje.getMonopatinId());
 		ParadaDTO paradaFin = monopatinActual.getParada();
 
 		// Obtener pausas
