@@ -144,9 +144,27 @@ spring.datasource.password=tu_contraseña
 spring.jpa.hibernate.ddl-auto=update
 ```
 
-## Diagrama del microservivio
+## Diagramas del microservicio
+Endpoint y dependencias internas
 
-*Agregar*
+``` mermaid
+flowchart LR
+%% Estilos globales
+%% ----------------------------------------
+classDef service fill:#e8f1ff,stroke:#3a6ea5,stroke-width:2px,color:#0b2545,rx:10,ry:10;
+classDef db fill:#fff4d6,stroke:#b68b00,stroke-width:2px,color:#4e3b00,rx:10,ry:10;
+classDef op fill:#e2ffe9,stroke:#41a35a,stroke-width:2px,color:#1a4e26,rx:10,ry:10;
+    subgraph Viaje_Service ["viaje_service"]
+        A1[POST /viajes/iniciar]:::service -->|Crea viaje| A2[(Viaje)]:::db
+        A3[GET /viajes/id]:::service -->|Consulta| A2
+        A4[GET /viajes/id/finalizar]:::service -->|Finaliza| A2
+
+        A2 -->|Calcular distancia| D[DistanciaService]:::service
+        A2 -->|Obtener monopatín| M[monopatin_service]:::service
+        A2 -->|Consultar pausas| P[pausa_service]:::service
+        A2 -->|Calcular costo| T[tarifa_service]:::service
+    end
+```
 
 ## Colaboradores
 
