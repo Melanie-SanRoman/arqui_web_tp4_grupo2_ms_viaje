@@ -167,6 +167,9 @@ public class ViajeService {
 		viaje.setKilometros(km);
 		viaje.setCosto(costoFinal);
 		viaje.setPausas(pausas);
+		
+		// Guardar viaje
+		repository.saveAndFlush(viaje);
 
 		return viaje.toViajeDTO();
 	}
