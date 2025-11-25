@@ -12,7 +12,6 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
 
 @Entity
 public class Viaje {
@@ -23,7 +22,7 @@ public class Viaje {
 	private LocalDate inicio;
 	@Column
 	private LocalDate fin;
-	@OneToMany
+	@Column
 	private Long monopatinId;
 	@Column
 	private Double kilometros;
