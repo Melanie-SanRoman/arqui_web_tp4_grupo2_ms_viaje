@@ -84,7 +84,7 @@ public class ViajeController {
 	@Operation(summary = "Inicia un viaje", description = "Crea un viaje asociado a un monopatin")
 	@ApiResponses({ @ApiResponse(responseCode = "200", description = "Viaje iniciado"),
 			@ApiResponse(responseCode = "404", description = "Monopatin no encontrado") })
-	@PostMapping("/viajes/iniciar/{monopatinId}")
+	@PostMapping("/iniciar/{monopatinId}")
 	public ResponseEntity<ViajeResponseDTO> iniciarViaje(
 			@Parameter(description = "ID del Monopatin a asociar") @PathVariable Long monopatinId) {
 		try {
@@ -98,7 +98,7 @@ public class ViajeController {
 	@Operation(summary = "Finaliza un viaje", description = "Marca un viaje como finalizado")
 	@ApiResponses({ @ApiResponse(responseCode = "200", description = "Viaje finalizado"),
 			@ApiResponse(responseCode = "404", description = "Viaje no encontrado") })
-	@PutMapping("/viajes/{id}/finalizar")
+	@PutMapping("/{id}/finalizar")
 	public ResponseEntity<ViajeResponseDTO> finalizarViaje(
 			@Parameter(description = "ID del viaje a finalizar") @PathVariable Long id) {
 		try {
