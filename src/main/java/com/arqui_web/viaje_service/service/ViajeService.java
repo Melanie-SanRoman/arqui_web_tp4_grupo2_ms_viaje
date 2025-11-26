@@ -62,6 +62,9 @@ public class ViajeService {
 			ViajeResponseDTO dto = v.toViajeDTO();
 			MonopatinDTO monopatin = monopatinClient.getMonopatinById(v.getMonopatinId());
 			dto.setMonopatin(monopatin);
+		
+			List<PausaResponseDTO> pausas = pausaClient.getPausasByViaje(id);
+			dto.setPausas(pausas);
 			return dto;
 
 		});
