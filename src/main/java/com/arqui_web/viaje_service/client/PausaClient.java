@@ -18,7 +18,7 @@ public class PausaClient {
 	@Autowired
 	private RestTemplate restTemplate;
 
-	private static final String BASE_URL = "http://localhost:8082/pausas";
+	private static final String BASE_URL = "http://localhost:8081/pausas";
 	
 	public PausaTotalDTO getMinutosPausaByViaje(Long viajeId) {
 		return restTemplate.getForObject(BASE_URL + "/viaje/" + viajeId + "/total-minutos", PausaTotalDTO.class);
