@@ -48,7 +48,7 @@ public class MonopatinClient {
 			return restTemplate.patchForObject(BASE_URL + "/" + id + "/localizacion", fields, MonopatinDTO.class);
 
 		} catch (Exception e) {
-			// ⚠ simulamos que el monopatín se movió a una parada nueva
+			// simulamos que el monopatín se movió a una parada nueva
 			ParadaDTO nueva = new ParadaDTO();
 			nueva.setId(1000L);
 			nueva.setLatitud(-34.61);
