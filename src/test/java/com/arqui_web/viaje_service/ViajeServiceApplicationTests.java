@@ -10,20 +10,24 @@ import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestMethodOrder;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.web.client.RestTemplate;
 
 import com.arqui_web.viaje_service.dto.PausaResponseDTO;
 import com.arqui_web.viaje_service.dto.PausaTotalDTO;
-import com.arqui_web.viaje_service.dto.ViajeResponseDTO;;
+import com.arqui_web.viaje_service.dto.ViajeResponseDTO;
 
-@SpringBootTest
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+@ActiveProfiles("test")
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 class ViajeServiceApplicationTests {
 
-	private final RestTemplate rest = new RestTemplate();
+	@Autowired
+	private RestTemplate rest;
 
 	private final String viajeUrl = "http://localhost:8080/viajes";
 	private final String pausaUrl = "http://localhost:8081/pausas";
