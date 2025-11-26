@@ -38,6 +38,12 @@ Responsabilidades de `viaje_service`:
 
 ## Endpoints disponibles
 
+### Documentacion Swagger / OpenAPI
+- Este microservicio expone su documentación interactiva en:
+> [Swagger UI](http://localhost:8080/swagger-ui/index.html)
+
+---
+
 * POST `/api/viajes/iniciar/{monopatinId}`
 	* Inicia un viaje para el monopatin indicado.
  	* Devuelve: `ViajeResponseDTO.java`
@@ -123,8 +129,6 @@ Consume endpoints de `monopatin_service`:
 * Spring Data JPA
 * MySQL
 * RestTemplate
-
-Pendientes de agregar: 
 * Swagger
 * Autenticacion JWT
 
@@ -155,7 +159,7 @@ classDef service fill:#e8f1ff,stroke:#3a6ea5,stroke-width:2px,color:#0b2545,rx:1
 classDef db fill:#fff4d6,stroke:#b68b00,stroke-width:2px,color:#4e3b00,rx:10,ry:10;
 classDef op fill:#e2ffe9,stroke:#41a35a,stroke-width:2px,color:#1a4e26,rx:10,ry:10;
     subgraph Viaje_Service ["viaje_service"]
-        A1[POST /viajes/iniciar]:::service -->|Crea viaje| A2[(Viaje)]:::db
+        A1[POST /viajes/iniciar]:::service -->|Inicia viaje| A2[(Viaje)]:::db
         A3[GET /viajes/id]:::service -->|Consulta| A2
         A4[GET /viajes/id/finalizar]:::service -->|Finaliza| A2
 
@@ -165,6 +169,15 @@ classDef op fill:#e2ffe9,stroke:#41a35a,stroke-width:2px,color:#1a4e26,rx:10,ry:
         A2 -->|Calcular costo| T[tarifa_service]:::service
     end
 ```
+Este diagrama explica cómo funciona el viaje_service por dentro.
+Muestra claramente:
+
+* Endpoints expuestos al usuario.
+* Entidad principal gestionada (Viaje).
+* Servicios externos que consulta para finalizar un viaje.
+* Procesos internos como el cálculo de distancia.
+
+---
 
 -> Diagrama C4:
 
