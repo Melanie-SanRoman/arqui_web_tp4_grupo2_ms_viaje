@@ -12,6 +12,8 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestMethodOrder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.web.server.LocalServerPort;
+import org.springframework.context.annotation.Import;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.ActiveProfiles;
@@ -23,24 +25,32 @@ import com.arqui_web.viaje_service.dto.ViajeResponseDTO;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @ActiveProfiles("test")
+@Import(TestRestTemplateConfig.class)
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 class ViajeServiceApplicationTests {
 
 	@Autowired
 	private RestTemplate rest;
 
-	private final String viajeUrl = "http://localhost:8080/viajes";
+	@LocalServerPort
+    private int port;
+
+	// private final String viajeUrl = "http://localhost:8080/viajes";
 	private final String pausaUrl = "http://localhost:8081/pausas";
 	private final String tarifaUrl = "http://localhost:8082/tarifas";
 
 	private static Long viajeId;
 	private static Long pausaId;
 
+	
+    private String viajeUrl() {
+        return "http://localhost:" + port + "/viajes";
+    }
+
 	@Test
 	@Order(1)
 	void iniciarViaje() {
-
-		ResponseEntity<ViajeResponseDTO> response = rest.postForEntity(viajeUrl + "/iniciar/1", null,
+		ResponseEntity<ViajeResponseDTO> response = rest.postForEntity(viajeUrl() + "/iniciar/1", null,
 				ViajeResponseDTO.class);
 
 		assertEquals(200, response.getStatusCode().value());
@@ -116,7 +126,7 @@ class ViajeServiceApplicationTests {
 	@Order(6)
 	void finalizarViaje() {
 
-		ResponseEntity<ViajeResponseDTO> response = rest.exchange(viajeUrl + "/" + viajeId + "/finalizar",
+		ResponseEntity<ViajeResponseDTO> response = rest.exchange(viajeUrl() + "/" + viajeId + "/finalizar",
 				HttpMethod.PUT, null, ViajeResponseDTO.class);
 
 		assertEquals(200, response.getStatusCode().value());

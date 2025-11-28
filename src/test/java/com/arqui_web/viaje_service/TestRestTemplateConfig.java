@@ -1,4 +1,4 @@
-package com.arqui_web.viaje_service.config;
+package com.arqui_web.viaje_service;
 
 import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.context.annotation.Bean;
@@ -7,12 +7,11 @@ import org.springframework.web.client.RestTemplate;
 
 @TestConfiguration
 public class TestRestTemplateConfig {
-
+    
     @Bean
     @Primary
-    RestTemplate restTemplate(JwtInterceptor jwtInterceptor) {
+    RestTemplate restTemplate() {
         RestTemplate rest = new RestTemplate();
-        rest.getInterceptors().add(jwtInterceptor);
         return rest;
     }
 }
